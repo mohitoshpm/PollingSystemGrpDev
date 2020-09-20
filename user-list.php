@@ -5,7 +5,7 @@ include_once("./framework/function.php");
 GetHeaderWithNav("User List");
 
 $userType = new UserTypeEnum();
- $userList=GetList("user_profile","UserTypeEnumId=$userType->Hr");
+ $userList=GetList("user_profile","");
 
 if(isset($_POST['Delete'])){
   if($_POST['Delete']>0){

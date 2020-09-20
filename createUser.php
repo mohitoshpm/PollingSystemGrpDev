@@ -3,7 +3,7 @@
 include_once("./framework/function.php");
 include_once("./framework/user-profile-function.php");
 
-GetHeader("Create New HR");
+GetHeader("Create New User");
 GoToHome();
 
 $errorMessage="";
