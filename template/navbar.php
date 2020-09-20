@@ -18,7 +18,10 @@
                             <li><a href="#">Page 2</a></li>
                           </ul> -->
                           <ul class="nav navbar-nav navbar-right">
-                            <li><a href="./profile.php?id=<?php StartSession (); echo $_SESSION['id']; ?>"><span class="glyphicon glyphicon-user"></span> <?php StartSession (); echo $_SESSION['fullName']; ?></a></li>
+                            <li><a href="./profile.php?id=<?php  echo $_COOKIE["Id"]; ?>">
+                            <span class="glyphicon glyphicon-user">
+                            </span> <?php echo $_COOKIE["FullName"];?></a>
+                            </li>
                             <li><a href="./logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                           </ul>
                         </div>

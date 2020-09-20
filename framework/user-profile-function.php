@@ -75,8 +75,4 @@ function IsValidUserProfile(&$errorMessage,$id){
 
     return true;
 }
-
-
-
-
 ?>

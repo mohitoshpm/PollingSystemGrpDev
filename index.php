@@ -5,12 +5,8 @@ GetHeaderWithNav("Dashboard");
 ?>
   
 
-
-
-
-
         <h1>Welcome  <?php  
-          echo $_SESSION['fullName']; 
+          echo $_COOKIE["FullName"]; 
           ?> </h1>
   
           <?php 
@@ -39,7 +35,6 @@ GetHeaderWithNav("Dashboard");
           </div>
           </div>
         </div>
-
 
        </div>
 

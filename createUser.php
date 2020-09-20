@@ -40,8 +40,6 @@ if( !$isError){
       SetSession($result);
      
     }
-
-    header("location: success.php");
 }
 
 }

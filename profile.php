@@ -3,7 +3,7 @@
 include_once("./framework/function.php");
 GetHeaderWithNav("Profile");
 
- $user=GetById("user_profile", $_SESSION['id'])
+ $user=GetById("user_profile",  $_COOKIE["Id"])
 
 
 ?>
@@ -29,7 +29,10 @@ GetHeaderWithNav("Profile");
     </table>
 
     <div class="text-center">
-      <button type="button" class="btn btn-info">Edit</button>
+    <a class="btn btn-info" href="./user-edit.php">
+    Edit
+    </a>
+    
     </div>
     
     

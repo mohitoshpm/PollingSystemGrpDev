@@ -2,29 +2,31 @@
 <?php
 
 include_once("./framework/function.php");
-GetHeaderWithNav("Employee List");
+GetHeaderWithNav("User List");
 
 $userType = new UserTypeEnum();
-$userList=GetList("user_profile","UserTypeEnumId=$userType->Employee");
+ $userList=GetList("user_profile","UserTypeEnumId=$userType->Hr");
 
 if(isset($_POST['Delete'])){
-    if($_POST['Delete']>0){
-  
-      $id = $_POST['Delete'];
-      $sql="DELETE FROM user_profile WHERE Id = $id";
-      $db = GetDb();
-      mysqli_query($db, $sql);
-  
-    }
+  if($_POST['Delete']>0){
+
+    $id = $_POST['Delete'];
+    $sql="DELETE FROM user_profile WHERE Id = $id";
+    $db = GetDb();
+    mysqli_query($db, $sql);
+
   }
+}
+
+
 
 ?>
   
 <div class="row">    
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <h2>Employee List</h2>
+    <h2>User List</h2>
       <?php if(mysqli_num_rows($userList)> 0):?>   
-    <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>Sn</th>
@@ -32,9 +34,9 @@ if(isset($_POST['Delete'])){
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Gender</th>
-                <th>Role</th>
-                <th>Type</th>
-                <th>Action</th>
+                <!-- <th>Role</th> -->
+                <!-- <th>Type</th> -->
+                <!-- <th>Action</th> -->
             </tr>
         </thead>
       <tbody>
@@ -56,7 +58,7 @@ if(isset($_POST['Delete'])){
           }
           ?>
           </td>
-          <td style="text-align: center;"> 
+          <!-- <td style="text-align: center;"> 
             <?php  
             if($user["IsAdmin"]){
                 echo "Admin";
@@ -64,8 +66,8 @@ if(isset($_POST['Delete'])){
                 echo "";
             }
           ?>
-          </td>
-          <td style="text-align: center;"> 
+          </td> -->
+          <!-- <td style="text-align: center;"> 
             <?php  
           $class_vars = UserTypeEnumList();
           foreach ($class_vars as $name => $value) {
@@ -75,19 +77,19 @@ if(isset($_POST['Delete'])){
             }
           }
           ?>
-          </td>
-          <td style="text-align: center;"> 
+          </td> -->
+          <!-- <td style="text-align: center;"> 
             <a href="./profile.php">
                 <button class=" btn btn-default btn-xs btn-info">Profile</button>
             </a>
-            <a href="./employee-add-edit.php?id=<?php echo $user["Id"];?>">
+            <a href="./hr-edit.php?id=<?php echo $user["Id"];?>">
                 <button class=" btn btn-default btn-xs btn-info">Edit</button>
             </a>
-            
+          
             <form method="post" style="display: inline-block;"> 
-                <button type="submit" name="Delete" value="<?php echo $user["Id"];?>"  class=" btn btn-default btn-xs btn-danger" >Delete</button>
+            <button type="submit" name="Delete" value="<?php echo $user["Id"];?>"  class=" btn btn-default btn-xs btn-danger" >Delete</button>
             </form> 
-          </td>
+          </td> -->
         </tr>
        <?php $sn++;
        endwhile; ?>
@@ -99,6 +101,7 @@ if(isset($_POST['Delete'])){
   </div>
   
 </div>
+
 
 
 <?php GetFooterWithNav(); ?>

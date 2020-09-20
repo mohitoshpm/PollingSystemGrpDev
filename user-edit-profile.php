@@ -1,22 +1,15 @@
 
 <?php
 include_once("./framework/function.php");
-
 include_once("./framework/user-profile-function.php");
-
-GetHeaderWithNav("Employee Add/Edit");
-
 $errorMessage="";
 $isError=false;
 $isSave=false;
 
-$id=0;
+$id=$_COOKIE["Id"];
 
-if(isset($_GET['id']) && $_GET['id']>0){
-  $id=$_GET['id'];
-  //print_r($user);
 
-}
+
 
 if(isset($_POST['submit_button'])){
   $isError = !IsValidUserProfile($errorMessage,$id);
@@ -36,20 +29,8 @@ if( !$isError){
 $user=GetById("user_profile", $id);
 
   if(isset($user)){
-
     $isAdded=true;
-    if($_SESSION['id']==$id){
-      $password = md5($_POST['password']);
-      $sql = "UPDATE user_profile set FullName='$fullName', Email='$email', Mobile='$mobile' , Password='$password' , GenderEnumId='$genderEnumId', IsAdmin='$isAdmin',	UserTypeEnumId='$userTypeEnumId' where id = $id";
-    }else{
-
-      $sql = "UPDATE user_profile set FullName='$fullName', Email='$email', Mobile='$mobile'  , GenderEnumId='$genderEnumId', IsAdmin='$isAdmin',	UserTypeEnumId='$userTypeEnumId' where id = $id";
-    }
-  }else{
-
-    $password = md5($_POST['password']);
-    $isAdded=false;
-    $sql = "INSERT INTO user_profile(FullName, Email, Mobile, Password, GenderEnumId, IsAdmin,	UserTypeEnumId	 ) VALUE('$fullName', '$email','$mobile', '$password','$genderEnumId','$isAdmin','$userTypeEnumId')";
+    $sql = "UPDATE user_profile set FullName='$fullName', Email='$email', Mobile='$mobile'  , GenderEnumId='$genderEnumId', IsAdmin='$isAdmin',	UserTypeEnumId='$userTypeEnumId' where id = $id";
   }
     
     $db = GetDb();
@@ -57,24 +38,19 @@ $user=GetById("user_profile", $id);
     mysqli_query($db, $sql);
 
     $isSave=true;
-
-
     //header("location: success.php");
 }
 
 }
-
-
 $user=GetById("user_profile", $id);
   if(isset($user)){
     $isAdded=true;
   }else{
     $isAdded=false;
   }
-
-
 ?>
-<h2>Employee Add/Edit</h2>
+
+<h2>Profile Edit</h2>
 <div class="alert alert-danger" style="display: <?php echo ($isError? 'block':'none'); ?>;">
             <strong>Error!</strong> <?php echo $errorMessage?>
 </div>
@@ -83,7 +59,7 @@ $user=GetById("user_profile", $id);
             <strong>Message:</strong> Successfully Save Data.
 </div>
 
-<form method="post" action="employee-add-edit.php?id=<?php echo $id ?>">
+<form method="post" action="user-edit.php">
     <div class="row">     
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-bottom: 20px; border-radius: 5px;">     
       
@@ -115,18 +91,6 @@ $user=GetById("user_profile", $id);
             <input type="tel" value="<?php echo $user['Mobile']; ?>" name="mobile" class="form-control" id="mobile">
           </div>
 
-          <?php if(!$isAdded || $_SESSION['id']==$id): ?>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password"  name="password"  class="form-control" id="pwd">
-          </div>
-
-          <div class="form-group">
-            <label for="con-pwd">Confirm Password:</label>
-            <input type="password" name="confirmPassword" class="form-control" id="Confirm-Password">
-          </div> 
-          <?php endif; ?>
-
           <div style="text-align: center;">
             <button type="submit" name="submit_button" class="btn btn-default btn-success">Save</button>
           </div>
@@ -137,4 +101,3 @@ $user=GetById("user_profile", $id);
     
     </form>
   
-  <?php GetFooterWithNav(); ?>

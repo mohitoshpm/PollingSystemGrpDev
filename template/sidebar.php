@@ -1,9 +1,12 @@
 <div class="sidenav">
 
         <a class="nav-menu" href="./">Dashboard </a>
-        <a class="nav-menu" href="./hr-list.php">HR List </a>
-        <a class="nav-menu" href="./employee-add-edit.php?id=0">Employee Add</a>
-        <a class="nav-menu" href="./employee-list.php">Employee List</a>
+        <a class="nav-menu" href="./profile.php">Profile</a>
+        <a class="nav-menu" href="./user-edit.php">Edit Profile</a>
+        <a class="nav-menu" href="./user-password-change.php">Change Password</a>
+        <a class="nav-menu" href="./user-list.php">User List</a>
+        <a class="nav-menu" href="./PollAddEdit.php">Create Poll</a>
+
         <!-- <a href="#clients">Clients</a>
         <a href="#contact">Contact</a>
         <button class="dropdown-btn">Dropdown 

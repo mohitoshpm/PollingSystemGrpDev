@@ -3,10 +3,7 @@
 <?php
 include_once("./framework/function.php");
 GetHeader("login Page");
-
 GoToHome();
-
-
 if(isset($_POST['submit'])){
     
     $email = $_POST['email'];
@@ -19,17 +16,13 @@ if(isset($_POST['submit'])){
 
     if(mysqli_num_rows($result)== 1){
       SetSession($result);
-      header("location: index.php");
-
+      
     }else {
         echo "incorrect email/password combination";
     }
 }
 
 ?>
-
-
-
   <div class="container">   
     <div class="row">     
       <div class="col-md-4 col-md-offset-4" style="background: antiquewhite; padding-top: 20px; padding-bottom: 20px; border-radius: 5px;">
@@ -57,13 +50,5 @@ if(isset($_POST['submit'])){
       </div>    
     </div>    
   </div>
-  
-        
-  
-
-
-
-
-
 <?php GetFooter(); ?>
 

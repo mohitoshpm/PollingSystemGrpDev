@@ -15,7 +15,6 @@ $class_vars = get_class_vars(get_class($gender));
 return $class_vars;
 
 }
-
 //User Type Enum
 class UserTypeEnum
 {
@@ -31,4 +30,37 @@ $class_vars = get_class_vars(get_class($obj));
 return $class_vars;
 
 }
+
+//Poll Type Enum
+class PollTypeEnum
+{
+    var $SingleOption = 1;
+    var $MultiOption = 2;
+    
+}
+function PollTypeEnumList(){
+    $obj = new PollTypeEnum();
+
+$class_vars = get_class_vars(get_class($obj));
+
+return $class_vars;
+
+}
+
+//Poll Status Enum
+class PollStatusEnum
+{
+    var $Active = 1;
+    var $Inactive = 2;
+    
+}
+function PollStatusEnumList(){
+    $obj = new PollStatusEnum();
+
+$class_vars = get_class_vars(get_class($obj));
+
+return $class_vars;
+
+}
+
 ?>
