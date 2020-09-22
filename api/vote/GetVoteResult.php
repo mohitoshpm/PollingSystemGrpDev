@@ -69,14 +69,18 @@ if($dbResult = mysqli_query($db,$sql))
 
     $pollOption[$cr]['Id']    =$row['Id'];
     $pollOption[$cr]['PollId'] =$row['PollId'];
-    $pollOption[$cr]['Name']  =$row['Name'];
+    $pollOption[$cr]['Name']  = $row['Name'];
     $pollOption[$cr]['OrderNo']    =$row['OrderNo'];
     $pollOption[$cr]['ImageId'] = $row['ImageId'];
     $pollOption[$cr]['PollCount'] = $row['PollCount'];
 
+
+    $pollOption[$cr]['IsSelected'] = false;
+
       $cr++;
   }
 
+  
 }
 
 return $pollOption;

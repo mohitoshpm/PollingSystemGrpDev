@@ -26,7 +26,6 @@ if($id<=0)
   exit;
 }else{
 
-  $result['error']="Call";
   $db = GetDb();
   // Get the data
   $people = array();
@@ -64,13 +63,16 @@ if($id<=0)
 function GetNew(){
   $poll = array();
 
-  $poll['Id']    ="";
+  $poll['Id']    =0;
   $poll['Name']  = "";
-  $poll['StatusEnumId'] = "";
-  $poll['TypeEnumId']    ="";
+  $poll['StatusEnumId'] = 1;
+  $poll['TypeEnumId']    =1;
   $poll['IsPublic']  = false;
   $poll['ImageId'] = "";
   $poll['CreateBy'] = $_COOKIE["Id"];
+
+  $poll['OptionList']=[];
+
 
   return $poll;
 

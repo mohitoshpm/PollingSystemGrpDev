@@ -5,8 +5,9 @@
         <a class="nav-menu" href="./user-edit.php">Edit Profile</a>
         <a class="nav-menu" href="./user-password-change.php">Change Password</a>
         <a class="nav-menu" href="./user-list.php">User List</a>
-        <a class="nav-menu" href="./PollAddEdit.php">Create Poll</a>
-
+        <a class="nav-menu" href="./PollAddEdit.php">Poll Manager</a>
+        <a class="nav-menu" href="./Vote.php">Give Vote</a>
+        <a class="nav-menu" href="./Vote-Result.php">Vote Result</a>
         <!-- <a href="#clients">Clients</a>
         <a href="#contact">Contact</a>
         <button class="dropdown-btn">Dropdown 

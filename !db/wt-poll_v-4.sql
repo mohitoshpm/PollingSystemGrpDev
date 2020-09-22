@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2020 at 05:53 PM
+-- Generation Time: Sep 23, 2020 at 12:30 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -66,23 +66,41 @@ CREATE TABLE `poll` (
 --
 
 INSERT INTO `poll` (`Id`, `Name`, `StatusEnumId`, `TypeEnumId`, `IsPublic`, `ImageId`, `CreateBy`) VALUES
-(1, 'What about your next plan?', 1, 1, 0, NULL, 25),
-(2, 'What about your next plan?', 1, 1, 0, NULL, 25),
-(3, 'What about your next plan?', 1, 1, 0, NULL, 25);
+(8, 'What Programming language you like?', 1, 1, 0, NULL, 25),
+(9, 'What is your next plan?', 1, 1, 0, NULL, 27),
+(10, 'What type of food you like?', 1, 1, 0, NULL, 26);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `poll-option`
+-- Table structure for table `poll_option`
 --
 
-CREATE TABLE `poll-option` (
+CREATE TABLE `poll_option` (
   `Id` int(11) NOT NULL,
+  `PollId` int(11) NOT NULL,
   `Name` text NOT NULL,
   `OrderNo` int(11) NOT NULL,
-  `ImageId` int(11) NOT NULL,
+  `ImageId` int(11) DEFAULT NULL,
   `PollCount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `poll_option`
+--
+
+INSERT INTO `poll_option` (`Id`, `PollId`, `Name`, `OrderNo`, `ImageId`, `PollCount`) VALUES
+(53, 8, 'C', 1, NULL, 0),
+(54, 8, 'C++', 2, NULL, 0),
+(55, 8, 'Java', 3, NULL, 0),
+(56, 8, 'C#', 4, NULL, 1),
+(57, 8, 'PHP', 5, NULL, 1),
+(58, 9, 'Higher Study', 1, NULL, 0),
+(59, 9, 'Job', 2, NULL, 0),
+(60, 9, 'Business', 3, NULL, 0),
+(61, 10, 'Sweet', 1, NULL, 0),
+(62, 10, 'Vegetables', 2, NULL, 0),
+(63, 10, 'Meat, Fish, Poultry, Eggs', 3, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -114,7 +132,29 @@ INSERT INTO `user_profile` (`Id`, `FullName`, `Email`, `Mobile`, `Password`, `Ge
 (19, 'Mohitosh ', 'employee@gmail.com', '+8801760645364', '202cb962ac59075b964b07152d234b70', 1, 0, 2),
 (20, 'Mohi', 'mohi@gmail.com', '+8801760645366', '202cb962ac59075b964b07152d234b70', 1, 0, 1),
 (24, 'Mohitosh Pramanik', 'mohitoshpm3@gmail.com', '+8801760645364', '202cb962ac59075b964b07152d234b70', 1, 0, 2),
-(25, 'Mohitosh Pramanik', 'mohitoshpm@gmail.com', '+8801760645364', '202cb962ac59075b964b07152d234b70', 1, 0, 1);
+(25, 'Mohitosh Pramanik', 'mohitoshpm@gmail.com', '+8801760645364', '202cb962ac59075b964b07152d234b70', 1, 0, 1),
+(26, 'Mohitosh Pramanik', 'mohitoshpm15@gmail.com', '+8801760645364', '202cb962ac59075b964b07152d234b70', 1, 0, 1),
+(27, 'Mohitosh Pramanik', 'mohitoshpm16@gmail.com', '+8801760645364', '202cb962ac59075b964b07152d234b70', 1, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vote`
+--
+
+CREATE TABLE `vote` (
+  `Id` int(11) NOT NULL,
+  `PollId` int(11) NOT NULL,
+  `ProfileId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `vote`
+--
+
+INSERT INTO `vote` (`Id`, `PollId`, `ProfileId`) VALUES
+(8, 8, 25),
+(9, 8, 26);
 
 --
 -- Indexes for dumped tables
@@ -135,11 +175,12 @@ ALTER TABLE `poll`
   ADD KEY `CreateBy` (`CreateBy`);
 
 --
--- Indexes for table `poll-option`
+-- Indexes for table `poll_option`
 --
-ALTER TABLE `poll-option`
+ALTER TABLE `poll_option`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `ImageId` (`ImageId`);
+  ADD KEY `ImageId` (`ImageId`),
+  ADD KEY `PollId` (`PollId`);
 
 --
 -- Indexes for table `user_profile`
@@ -147,6 +188,12 @@ ALTER TABLE `poll-option`
 ALTER TABLE `user_profile`
   ADD PRIMARY KEY (`Id`),
   ADD UNIQUE KEY `Email` (`Email`);
+
+--
+-- Indexes for table `vote`
+--
+ALTER TABLE `vote`
+  ADD PRIMARY KEY (`Id`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -161,17 +208,22 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT for table `poll`
 --
 ALTER TABLE `poll`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
--- AUTO_INCREMENT for table `poll-option`
+-- AUTO_INCREMENT for table `poll_option`
 --
-ALTER TABLE `poll-option`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `poll_option`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT for table `user_profile`
 --
 ALTER TABLE `user_profile`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+--
+-- AUTO_INCREMENT for table `vote`
+--
+ALTER TABLE `vote`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Constraints for dumped tables
 --
@@ -184,10 +236,11 @@ ALTER TABLE `poll`
   ADD CONSTRAINT `poll_ibfk_2` FOREIGN KEY (`CreateBy`) REFERENCES `user_profile` (`Id`);
 
 --
--- Constraints for table `poll-option`
+-- Constraints for table `poll_option`
 --
-ALTER TABLE `poll-option`
-  ADD CONSTRAINT `poll-option_ibfk_1` FOREIGN KEY (`ImageId`) REFERENCES `image` (`Id`);
+ALTER TABLE `poll_option`
+  ADD CONSTRAINT `poll_option_ibfk_1` FOREIGN KEY (`ImageId`) REFERENCES `image` (`Id`),
+  ADD CONSTRAINT `poll_option_ibfk_2` FOREIGN KEY (`PollId`) REFERENCES `poll` (`Id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

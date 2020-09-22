@@ -5,7 +5,7 @@ include_once("./framework/function.php");
 include_once("./framework/pollAddEditFunction.php");
 
 
-GetHeaderWithNav("Poll Add/Edit");
+GetHeaderWithNav("Vote Result");
 
 $errorMessage="";
 $isError=false;
@@ -28,7 +28,7 @@ if(isset($_GET['id']) && $_GET['id']>0){
   
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
     <div class="border-box">
-      <h2>Poll Manager</h2>
+      <h2>Vote Result</h2>
     </div>
   </div>
   
@@ -47,7 +47,12 @@ if(isset($_GET['id']) && $_GET['id']>0){
    
    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
      <div class="border-box">
-       <h4 style="text-align: center; font-weight: 500;">Poll List</h4>
+       <h4 style="text-align: center; font-weight: 500;">Poll List
+        <button type="button" style="float: right;" ng-click="GetVoteResult()" class="btn btn-xs btn-primary">Refresh</button>
+      </h4>
+       
+       
+       
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -62,9 +67,7 @@ if(isset($_GET['id']) && $_GET['id']>0){
             <td>{{row.Name}}</td>
             <td style="text-align: center; width: 110px;">
               
-              <button type="button" ng-click="EditPoll(row)" class="btn btn-xs btn-info">Edit</button>
-              
-              <button type="button" ng-click="DeletePoll(row.Id)" class="btn btn-xs  btn-danger">Delete</button>
+              <button type="button" ng-click="EditPoll(row)" class="btn btn-xs btn-info">Select</button>
               
             </td>
           </tr>
@@ -76,42 +79,32 @@ if(isset($_GET['id']) && $_GET['id']>0){
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-bottom: 20px; border-radius: 5px;">     
       <div class="border-box">
 
-        <h4 style="text-align: center; font-weight: 500;">Poll Add/Edit</h4>
-        <div style="text-align: right;">
-          <button ng-click="GetPollById(0)" class="btn btn-xs btn-primary">Add New</button>
-        </div>
-        <div class="form-group">
-            <label for="Name">Name:</label>
-              <input type="text" ng-model="SelectedPoll.Name"  class="form-control">
-        </div>
-        <label for="Name">Options:</label>
+        <h4 style="text-align: center; font-weight: 500;">Selected Poll</h4>
         
-        <button ng-click="AddOption()" type="button" class="btn btn-xs btn-info" style="float: right;">Add Option</button>
-        
+        <div style="font-weight: bold;">
+           {{SelectedPoll.Name}}
+        </div>
            <div>
-           <table class="table ">
+           <table class=" table table-bordered">
+             <thead>
+               <tr>
+                 <th>Option</th>
+                 <th>Person</th>
+               </tr>
+             </thead>
              <tbody>
                <tr ng-repeat="row in SelectedPoll.OptionList">
-                  <td style="width: 240px;">
-                  <div class="radio">
-                    <label>
-                    <input type="radio" name="poll-option" >
-                    <input type="text" ng-model="row.Name" style="height: 24px;"  class="form-control">
-                    </label>
-                  </div>
+                  <td >
+                  {{row.Name}}
                   </td>
-                  <td style="vertical-align: middle;"> 
-                  <button ng-click="DeletePollOption(row.Id,$index)" type="button" class="btn btn-xs btn-danger">X</button></td>
+                  <td style="text-align: center; width: 50px;" >
+                  {{row.PollCount}}
+                  </td>
                </tr>
              </tbody>
            </table>
            
            </div>
-
-
-            <div style="text-align: center;">
-              <button ng-click="SavePoll()" class="btn btn-default btn-success">Save</button>
-            </div>
       </div>
           
 
@@ -125,4 +118,4 @@ if(isset($_GET['id']) && $_GET['id']>0){
 
 
   
-  <?php GetFooterWithNav("PollAddEdit.js"); ?>
+  <?php GetFooterWithNav("Vote-Result.js"); ?>

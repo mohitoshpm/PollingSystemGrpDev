@@ -1,35 +1,39 @@
 
 pollingApp.controller('PollAddEditCtrl', function ($scope, $http) {
 
-$scope.ErrorMsg = "";
-$scope.HasError = false;
-$scope.HasViewPermission = false;
-
-// $scope.GetPollById = function () {
-
-//     $http.get('PollAddEdit.php?action=GetPollByIdFun').then(function(response) {
-//         console.log(response.data);
-//     })
+    $scope.ErrorMsg = false;
+    $scope.HasError ="";
+    $scope.IsDataSave=false;
+    $scope.HasViewPermission = false;
     
-//     // $http.get('http://localhost/wt/PollingSystemGrpDev/framework/pollAddEditFunction.php').then(function(response) {
-//     //     console.log(response.data);
-//     // })
-// };
+    $scope.MessageClear = function(){
+        $scope.ErrorMsg = false;
+        $scope.HasError ="";
+        $scope.IsDataSave=false;
+    }
+
+$scope.SelectedPoll=[];
+
 
 
 $scope.GetPollById = function(id) {
-    console.log("Id="+id);
+    
     $http({
         
         method: 'GET',
         url: './api/poll/GetPoll.php?id='+id
         
     }).then(function (response) {
-        
-        // on success
         $scope.result = response.data;
-        $scope.poll= $scope.result.data;
-        console.log($scope.result);
+        if(!$scope.result.hasError){
+          // on success
+            $scope.SelectedPoll= $scope.result.data;
+            $scope.SelectedPoll.OptionList.push($scope.GetNewPollOption());
+          
+       }else{
+           $scope.HasError= $scope.result.hasError;
+           $scope.ErrorMsg= $scope.result.error;
+       }
         
     }, function (response) {
         
@@ -40,7 +44,76 @@ $scope.GetPollById = function(id) {
 };
 
 
+$scope.DeletePoll = function(id) {
+    $scope.MessageClear();
+    $http({
+        
+        method: 'GET',
+        url: './api/poll/DeletePoll.php?id='+id
+        
+    }).then(function (response) {
+        $scope.result = response.data;
+        if(!$scope.result.hasError){
+          // on success
+          console.log($scope.result);
+          $scope.GetPollListByUserId();
+         
+       }else{
+           $scope.HasError= $scope.result.hasError;
+           $scope.ErrorMsg= $scope.result.error;
+       }
+        
+    }, function (response) {
+        
+        // on error
+        console.log(response.data,response.status);
+        
+    });
+};
+
+$scope.DeletePollOption = function(id,index) {
+    $scope.MessageClear();
+    if(id<=0){
+        $scope.SelectedPoll.OptionList.splice(index,1)
+        return;
+    }
+
+    $http({
+        
+        method: 'GET',
+        url: './api/poll/DeletePollOption.php?id='+id
+        
+    }).then(function (response) {
+        $scope.result = response.data;
+        if(!$scope.result.hasError){
+          // on success
+          console.log($scope.result);
+          $scope.GetPollListByUserId();
+         
+       }else{
+           $scope.HasError= $scope.result.hasError;
+           $scope.ErrorMsg= $scope.result.error;
+       }
+        
+    }, function (response) {
+        
+        // on error
+        console.log(response.data,response.status);
+        
+    });
+};
+
+
+$scope.AddOption=function(){
+    $scope.MessageClear();
+    if($scope.SelectedPoll.OptionList!=undefined){
+        $scope.SelectedPoll.OptionList.push($scope.GetNewPollOption());
+    }
+    
+}
+
 $scope.GetPollListByUserId = function() {
+    $scope.MessageClear();
     $http({
         
         method: 'GET',
@@ -51,7 +124,6 @@ $scope.GetPollListByUserId = function() {
         // on success
         $scope.result = response.data;
         $scope.pollList= $scope.result.data;
-        console.log($scope.result);
         
     }, function (response) {
         
@@ -60,6 +132,60 @@ $scope.GetPollListByUserId = function() {
         
     });
 };
+
+$scope.EditPoll = function(row) {
+    $scope.SelectedPoll=row;
+    $scope.MessageClear();
+};
+
+
+
+
+$scope.SavePoll = function() {
+    $scope.MessageClear();
+    $http({
+        
+         method: 'POST',
+         url:  './api/poll/SavePoll.php',
+         data: $scope.SelectedPoll
+         
+    }).then(function (response) {// on success
+      
+        $scope.result = response.data;
+        if(!$scope.result.hasError){
+            // on success
+            $scope.SelectedPoll.Id= $scope.result.data;
+            $scope.GetPollListByUserId();
+            $scope.IsDataSave=true;
+
+       }else{
+
+           $scope.HasError= $scope.result.hasError;
+           $scope.ErrorMsg= $scope.result.error;
+       }
+      
+    }, function (response) {
+        
+         console.log(response.data,response.status);
+         
+    });
+};
+
+
+
+
+ $scope.GetNewPollOption = function(){
+     var pollOption ={
+    "Id": 0,
+    "PollId": 0,
+    "Name": "",
+    "OrderNo": 1,
+    "ImageId": "null",
+    "PollCount": 0
+     };
+
+     return pollOption;
+  }
 
 
 $scope.Init = function ()

@@ -7,6 +7,7 @@ GetHeaderWithNav("User List");
 $userType = new UserTypeEnum();
  $userList=GetList("user_profile","");
 
+ 
 if(isset($_POST['Delete'])){
   if($_POST['Delete']>0){
 
@@ -60,11 +61,11 @@ if(isset($_POST['Delete'])){
           </td>
           <!-- <td style="text-align: center;"> 
             <?php  
-            if($user["IsAdmin"]){
-                echo "Admin";
-            }else{
-                echo "";
-            }
+            // if($user["IsAdmin"]){
+            //     echo "Admin";
+            // }else{
+            //     echo "";
+            // }
           ?>
           </td> -->
           <!-- <td style="text-align: center;"> 
